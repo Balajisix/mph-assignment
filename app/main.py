@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.agent import perform_research
+from app.samp import perform_research, get_mermaid_graph
 from app.schemas import ResearchResponse
 from pydantic import BaseModel
 
@@ -23,3 +23,7 @@ def health_check():
 def get_research(payload: ResearchRequest):
     query = payload.query
     return perform_research(query)
+
+@app.get("/api/graph")
+def get_graph():
+    return {"mermaid": get_mermaid_graph()}
